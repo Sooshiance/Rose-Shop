@@ -1,0 +1,7 @@
+/frontend/node_modules
+build
+venv
+.env
+db.sqlite3
+__pycahce__
+migrations

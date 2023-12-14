@@ -3,5 +3,6 @@ build
 venv
 .env
 db.sqlite3
-__pycahce__
+__pycache__
+/media/
 migrations

@@ -20,6 +20,10 @@ from django.utils.timezone import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# TODO : change the media path to prevent from Shell attack
+MEDIA_DIR = Path(__file__).resolve().parent.parent.parent
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -150,7 +154,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = MEDIA_DIR / "media"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

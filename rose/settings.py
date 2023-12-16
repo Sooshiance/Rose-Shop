@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     
     'corsheaders',
     
+    'user.apps.UserConfig',
     'product.apps.ProductConfig',
 ]
 
@@ -145,6 +146,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:3000',
 )
+CORS_ALLOW_CREDENTIALS = True
 
 
 MEDIA_URL = '/media/'
@@ -160,7 +162,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
-# AUTH_USER_MODEL = "user.User"
+AUTH_USER_MODEL = "user.User"
 
 
 SIMPLE_JWT = {

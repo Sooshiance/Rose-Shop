@@ -12,7 +12,7 @@ Before you want to test it in development :
 - first fill up some settings like SECRET_KEY in settings.py
 - create migrations folder (I removed them)
 - initiate a docker container to run redis (or directly run redis on port 6379)
-- I set time zone to Iran local time zone, you change it as you please
+- I set time zone to Iran local time zone, you can change it as you please
 
 If you found any bugs or have any advice, send me a comment.
 

@@ -20,7 +20,7 @@ from django.utils.timezone import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# TODO : change the media path to prevent from Shell attack
+# TODO : change the media path to prevent Shell Attack
 MEDIA_DIR = Path(__file__).resolve().parent.parent.parent
 
 

@@ -52,7 +52,7 @@ class UserLogoutAPIView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         try:
             refresh_token = request.data["refresh"]
-            token = token.RefreshToken(refresh_token)
+            token = tokens.RefreshToken(refresh_token)
             token.blacklist()
             return response.Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:

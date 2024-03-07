@@ -1,3 +1,3 @@
 from rest_framework import serializers
 
-# Create your serializers here.
+from .models import User, Profile

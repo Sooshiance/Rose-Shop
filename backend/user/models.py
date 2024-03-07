@@ -1,3 +1,116 @@
 from django.db import models
+from django.core.validators import RegexValidator
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-# Create your models here.
+
+class AllUser(BaseUserManager):
+    def create_user(self, phone, email, username, first_name, last_name, password=None, **kwargs):
+        
+        if not email:
+            raise ValueError('need Email')
+        
+        if not username:
+            raise ValueError('need Username')
+        
+        if not phone:
+            raise ValueError('need Phone number')
+
+        user = self.model(
+            email=self.normalize_email(email),
+            username=username,
+            phone=phone,
+            first_name=first_name,
+            last_name=last_name,
+            **kwargs,
+        )
+        user.is_active = False
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_staff(self, phone, email, username, first_name, last_name, password):
+        user = self.create_user(
+            email=email,
+            username=username,
+            phone=phone,
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
+        )
+        user.is_staff = True
+        user.is_active  = False
+        user.is_superuser = False        
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, phone, email, username, first_name, last_name, password):
+        user = self.create_user(
+            email=email,
+            username=username,
+            phone=phone,
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
+        )
+        user.is_staff = True
+        user.is_active  = True
+        user.is_superuser = True  
+        user.is_admin=True      
+        user.save(using=self._db)
+        return user
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', message='only alphabets and ascci characters')
+    numbers      = RegexValidator(r'^[0-9a]*$', message='only numbers')
+    phone        = models.CharField(max_length=11, unique=True)
+    email        = models.EmailField(unique=True)
+    username     = models.CharField(max_length=30, unique=True)
+    first_name   = models.CharField(max_length=30, unique=True)
+    last_name    = models.CharField(max_length=30, unique=True)
+    address      = models.CharField(max_length=244, blank=True, null=True)
+    pic          = models.ImageField(upload_to='user/', blank=True, null=True)
+    is_active    = models.BooleanField(default=False)
+    is_staff     = models.BooleanField(default=False)    
+    is_admin     = models.BooleanField(default=False)
+    last_login   = models.DateTimeField(null=True, blank=True)
+    created_at   = models.DateTimeField(auto_now_add=True)
+    
+    USERNAME_FIELD = "phone"
+    REQUIRED_FIELDS = ["email", "username", "first_name", "last_name"]
+    
+    objects = AllUser()
+
+    @property
+    def full_name(self):
+        return str(self.first_name) + ' ' + str(self.last_name)
+
+    def __str__(self) -> str:
+        return self.phone
+    
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+
+class Profile(models.Model):
+    user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    phone      = models.CharField(max_length=11, unique=True)
+    email      = models.EmailField(unique=True)
+    username   = models.CharField(max_length=30, unique=True)
+    first_name = models.CharField(max_length=30, unique=True)
+    last_name  = models.CharField(max_length=30, unique=True)
+    pic        = models.ImageField(upload_to='profile/', blank=True, null=True)
+
+    @property
+    def full_name(self):
+        return str(self.first_name) + ' ' + str(self.last_name)
+
+    def __str__(self) -> str:
+        return f'{self.user} {self.phone}'

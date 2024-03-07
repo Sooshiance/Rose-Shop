@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 
 class AllUser(BaseUserManager):
-    def create_user(self, phone, email, username, first_name, last_name, password=None, **kwargs):
+    def create_user(self, phone, email, username, full_name, password=None, **kwargs):
         
         if not email:
             raise ValueError('need Email')
@@ -19,8 +19,7 @@ class AllUser(BaseUserManager):
             email=self.normalize_email(email),
             username=username,
             phone=phone,
-            first_name=first_name,
-            last_name=last_name,
+            full_name=full_name,
             **kwargs,
         )
         user.is_active = False
@@ -28,13 +27,12 @@ class AllUser(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_staff(self, phone, email, username, first_name, last_name, password):
+    def create_staff(self, phone, email, username, full_name, password):
         user = self.create_user(
             email=email,
             username=username,
             phone=phone,
-            first_name=first_name,
-            last_name=last_name,
+            full_name=full_name,
             password=password,
         )
         user.is_staff = True
@@ -43,19 +41,18 @@ class AllUser(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone, email, username, first_name, last_name, password):
+    def create_superuser(self, phone, email, username, full_name, password):
         user = self.create_user(
             email=email,
             username=username,
             phone=phone,
-            first_name=first_name,
-            last_name=last_name,
+            full_name=full_name,
             password=password,
         )
-        user.is_staff = True
-        user.is_active  = True
+        user.is_staff     = True
+        user.is_active    = True
         user.is_superuser = True  
-        user.is_admin=True      
+        user.is_admin     = True      
         user.save(using=self._db)
         return user
 
@@ -66,10 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone        = models.CharField(max_length=11, unique=True)
     email        = models.EmailField(unique=True)
     username     = models.CharField(max_length=30, unique=True)
-    first_name   = models.CharField(max_length=30, unique=True)
-    last_name    = models.CharField(max_length=30, unique=True)
-    address      = models.CharField(max_length=244, blank=True, null=True)
-    pic          = models.ImageField(upload_to='user/', blank=True, null=True)
+    full_name    = models.CharField(max_length=100)
     is_active    = models.BooleanField(default=False)
     is_staff     = models.BooleanField(default=False)    
     is_admin     = models.BooleanField(default=False)
@@ -77,13 +71,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at   = models.DateTimeField(auto_now_add=True)
     
     USERNAME_FIELD = "phone"
-    REQUIRED_FIELDS = ["email", "username", "first_name", "last_name"]
+    REQUIRED_FIELDS = ["email", "username", "full_name"]
     
     objects = AllUser()
-
-    @property
-    def full_name(self):
-        return str(self.first_name) + ' ' + str(self.last_name)
 
     def __str__(self) -> str:
         return self.phone
@@ -100,17 +90,15 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
-    phone      = models.CharField(max_length=11, unique=True)
-    email      = models.EmailField(unique=True)
-    username   = models.CharField(max_length=30, unique=True)
-    first_name = models.CharField(max_length=30, unique=True)
-    last_name  = models.CharField(max_length=30, unique=True)
-    pic        = models.ImageField(upload_to='profile/', blank=True, null=True)
-
-    @property
-    def full_name(self):
-        return str(self.first_name) + ' ' + str(self.last_name)
+    user      = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
+    phone     = models.CharField(max_length=11, unique=True)
+    email     = models.EmailField(unique=True)
+    username  = models.CharField(max_length=30, unique=True)
+    full_name = models.CharField(max_length=100)
+    pic       = models.ImageField(upload_to='profile/', blank=True, null=True)
+    address   = models.CharField(max_length=550, blank=True, null=True)
+    city      = models.CharField(max_length=20, blank=True, null=True)
+    post_id   = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self) -> str:
         return f'{self.user} {self.phone}'

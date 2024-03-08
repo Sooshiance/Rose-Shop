@@ -89,6 +89,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True
 
 
+class UserOTP(models.Model):
+    numbers = RegexValidator(r'^[0-9a]*$', message='only numbers')
+    user    = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp     = models.CharField(max_length=6, validators=[numbers], unique=True)
+
+
 class Profile(models.Model):
     user      = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     phone     = models.CharField(max_length=11, unique=True)

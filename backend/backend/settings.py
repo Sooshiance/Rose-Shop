@@ -139,6 +139,13 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# TODO : to prevent shell and reverse shell attacks
+MEDIA_DIR = Path(__file__).resolve().parent.parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = MEDIA_DIR / 'media'
+
+
 # TODO : Change defaullt User model
 AUTH_USER_MODEL = "user.User"
 

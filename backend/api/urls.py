@@ -4,7 +4,7 @@ from user import views as auth_views
 
 
 urlpatterns = [
-    # TODO : User API
+    # TODO : user app
     path('user/token/', auth_views.MyTokenObtainPairView.as_view()),
     path('user/auth/', auth_views.AuthAPIView.as_view()),
     path('user/register/', auth_views.RegisterAPIView.as_view()),

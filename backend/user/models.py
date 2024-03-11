@@ -90,9 +90,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserOTP(models.Model):
-    numbers = RegexValidator(r'^[0-9a]*$', message='only numbers')
-    user    = models.ForeignKey(User, on_delete=models.CASCADE)
-    otp     = models.CharField(max_length=6, validators=[numbers], unique=True)
+    numbers     = RegexValidator(r'^[0-9a]*$', message='only numbers')
+    user        = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp         = models.CharField(max_length=6, validators=[numbers], unique=True)
+    otp_type    = models.PositiveSmallIntegerField()
+    created_at  = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user}'    
 
 
 class Profile(models.Model):

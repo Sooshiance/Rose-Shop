@@ -17,8 +17,8 @@ export const login = async (phone, password) => {
         console.log(error)
         return {
             data: null,
-            error: error.response.data.detail || "something went wrong!"
-        }
+            error: error.response.data?.detail || "something went wrong!"
+        };
     }
 }
 

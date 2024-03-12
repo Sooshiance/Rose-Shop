@@ -7,6 +7,7 @@ from django_jalali.admin.filters import JDateFieldListFilter
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title',)
+    prepopulated_fields = {'slug':('title',)}
 
 admin.site.register(Category, CategoryAdmin)
 
@@ -28,6 +29,7 @@ class ColorAdmin(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('title', 'vendor', 'category', 'is_active')
     list_filter = ['is_active',]
+    prepopulated_fields = {'slug':('title',)}
     search_fields = ['vendor', 'title', 'category__title', 'feature__title']
     inlines = [GalleryAdmin, ColorAdmin]
 

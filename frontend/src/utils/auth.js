@@ -17,7 +17,7 @@ export const login = async (phone, password) => {
         console.log(error)
         return {
             data: null,
-            error: error.response.data?.detail || "something went wrong!"
+            error: "something went wrong!"
         };
     }
 }
@@ -37,7 +37,7 @@ export const register = async (phone, password, password2, email, username, full
         console.log(error)
         return {
             data: null,
-            error: error.response.data?.detail || "something went wrong!"
+            error: "something went wrong!"
         }
     }
 }

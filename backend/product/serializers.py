@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Category, Feature, Product, Gallery, Color
+from .models import Category, Product, Gallery, Color
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -9,15 +9,6 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Category
-        fields = "__all__"
-
-
-class FeatureSerializer(serializers.ModelSerializer):
-    """
-    Fature serializer
-    """
-    class Meta:
-        model = Feature
         fields = "__all__"
 
 

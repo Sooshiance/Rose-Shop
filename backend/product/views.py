@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 
 from .models import Category, Feature, Product
-from .serializers import CategorySerializer, FeatureSerializer, ProductSerializer
+from .serializers import CategorySerializer, ProductSerializer
 
 
 class CategoryListAPIView(generics.ListAPIView):

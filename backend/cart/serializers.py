@@ -10,6 +10,7 @@ class CartSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cart 
         fields = "__all__"
+        exclude = ('created_at',)
     
     def __init__(self, *args, **kwargs):
         super(CartSerializer, self).__init__(*args, **kwargs)

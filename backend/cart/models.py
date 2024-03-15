@@ -15,11 +15,11 @@ User = settings.AUTH_USER_MODEL
 class Cart(models.Model):
     product    = models.ForeignKey(Product, on_delete=models.CASCADE)
     user       = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantitty  = models.PositiveIntegerField(default=1)
+    quantity  = models.PositiveIntegerField(default=1)
     price      = models.DecimalField(max_digits=12, decimal_places=0)
     subtotal   = models.DecimalField(max_digits=12, decimal_places=0)
     shipping   = models.DecimalField(max_digits=12, decimal_places=0)
-    tax_fee    = models.DecimalField(max_digits=12, decimal_places=0)
+    # tax_fee    = models.DecimalField(max_digits=12, decimal_places=0)
     total      = models.DecimalField(max_digits=12, decimal_places=0)
     color      = models.CharField(max_length = 30)
     created_at = jmodels.jDateTimeField(auto_now_add=True)

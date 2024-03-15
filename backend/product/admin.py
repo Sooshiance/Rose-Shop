@@ -8,6 +8,7 @@ from django_jalali.admin.filters import JDateFieldListFilter
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('title',)
     prepopulated_fields = {'slug':('title',)}
+    search_fields = ['title']
 
 admin.site.register(Category, CategoryAdmin)
 

@@ -10,17 +10,17 @@ User = settings.AUTH_USER_MODEL
 
 
 class Category(models.Model):
-    title  = models.CharField(max_length = 50, unique=True, primary_key=True)
+    title       = models.CharField(max_length = 50, unique=True, primary_key=True)
     description = models.CharField(max_length = 250)
-    slug  = models.SlugField(max_length = 50, allow_unicode=True)
-    pic  = models.ImageField(upload_to='category/')
+    slug        = models.SlugField(max_length = 50, allow_unicode=True)
+    pic         = models.ImageField(upload_to='category/')
 
     def __str__(self):
         return self.title
 
 
 class Feature(models.Model):
-    title  = models.CharField(max_length=50, unique=True, primary_key=True)
+    title        = models.CharField(max_length=50, unique=True, primary_key=True)
     description  = models.CharField(max_length=250)
 
     def __str__(self):

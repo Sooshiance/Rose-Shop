@@ -1,8 +1,8 @@
 import pyotp 
 
 
-def otpToken(user, phone):
-    totp = pyotp.TOTP(pyotp.random_base32(), interval=60)
+def otpToken():
+    totp = pyotp.TOTP(pyotp.random_base32(), digits=5, interval=60)
 
     otp = totp.now()
 

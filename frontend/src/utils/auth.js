@@ -25,7 +25,7 @@ export const login = async (phone, password) => {
 
 export const register = async (phone, password, password2, email, username, full_name) => {
     try {
-        const { data } = await axios.post("user/register/", {
+        const { data } = await APICall.post("user/register/", {
             phone, password, password2, email, username, full_name
         })
 

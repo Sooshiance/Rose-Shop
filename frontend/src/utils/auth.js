@@ -2,8 +2,6 @@ import { useAuthStore } from '../store/auth'
 import APICall from './proxyURL'
 import jwt_decode from 'jwt-decode'
 import Cookies from 'js-cookie'
-import axios from 'axios'
-
 
 export const login = async (phone, password) => {
     try {

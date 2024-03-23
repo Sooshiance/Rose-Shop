@@ -45,8 +45,8 @@ class Product(models.Model):
         return f'{self.title} {self.category} {self.feature} {self.is_active}'
     
     def save(self, *args, **kwargs):
-        super(Product, self).save()
         self.slug = slugify(self.title)
+        super(Product, self).save(args, kwargs)
 
     def gallery(self):
         return Gallery.objects.filter(product=self)
